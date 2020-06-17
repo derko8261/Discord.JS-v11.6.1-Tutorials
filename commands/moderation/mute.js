@@ -1,16 +1,5 @@
-const { RichEmbed } = require("discord.js")
-const { redlight } = require("../../colours.json");
-
-module.exports = {
-    config: {
-        name: "mute",
-        description: "Mutes a member in the discord!",
-        usage: "!mute <user> <reason>",
-        category: "moderation",
-        accessableby: "Members",
-        aliases: ["m", "nospeak"]
-    },
-    run: async (bot, message, args) => {
+const Discord = require("discord.js");
+   exports.run = (bot, message, args) => {
 // check if the command caller has permission to use the command
 if(!message.member.hasPermission("MANAGE_ROLES") || !message.guild.owner) return message.channel.send("You dont have permission to use this command.");
 
@@ -27,7 +16,7 @@ if(!reason) reason = "No reason given"
 let muterole = message.guild.roles.find(r => r.name === "Muted")
 if(!muterole) {
     try{
-        muterole = await message.guild.createRole({
+        muterole = message.guild.createRole({
             name: "Muted",
             color: "#514f48",
             permissions: []
@@ -54,7 +43,7 @@ mutee.addRole(muterole.id).then(() => {
 })
 
 //send an embed to the modlogs channel
-let embed = new RichEmbed()
+let embed = new Discord.RichEmbed()
     .setColor(redlight)
     .setAuthor(`${message.guild.name} Modlogs`, message.guild.iconURL)
     .addField("Moderation:", "mute")
